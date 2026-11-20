@@ -7,9 +7,9 @@ COPY pyproject.toml ./
 COPY src ./src
 RUN pip install ".[api]" && useradd --create-home --uid 1000 relicx && mkdir -p /data/storage && chown relicx /data/storage
 
-COPY alembic.ini ./
+COPY alembic.ini start.sh ./
 COPY migrations ./migrations
 
 USER relicx
 EXPOSE 8000
-CMD ["uvicorn", "relicx.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+CMD ["sh", "./start.sh"]
